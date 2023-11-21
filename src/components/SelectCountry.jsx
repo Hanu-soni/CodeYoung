@@ -1,15 +1,15 @@
-import { Autocomplete, Grid, Skeleton, TextField } from "@mui/material"
 import useAxios from "../hooks/useAxios"
 
 const SelectCountry = (props) => {
   const { value, setValue, label } = props;
   const [data, loaded, error] = useAxios("https://restcountries.com/v3.1/all");
 
+
   if(loaded) {
     return (
-      <Grid item xs={12} md={3}>
-        <Skeleton variant="rounded" height={60}/>
-      </Grid>
+        <div className="rounded" 
+        style={{ height: '60px', backgroundColor: '#e0e0e0' }}>
+        </div>
     )
   }
   if(error) {
@@ -20,18 +20,28 @@ const SelectCountry = (props) => {
   const dataCountries = dataFilter.map(item => {
     return `${item.flag} ${Object.keys(item.currencies)[0]} - ${item.name.common}`
   });
+  console.log(dataCountries)
 
   return (
-    <div className="col-3 col-md">
-      <Autocomplete
-        value={value}
-        disableClearable
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        options={dataCountries}
-        renderInput={(params) => <TextField {...params} label={label} />}
-      />
+    <div className="col-3 col-md input">
+       <div className="row">
+            <div className="col-3">
+                <span className="fw-bold fs-5">{label}</span>  
+            </div>
+            <div className="col-9 ">
+		<select value={value} onChange={(event) => {
+          setValue(event.target.value);
+          
+        }} className="form-select">
+        <option value="" disabled>Select an option</option>
+        {dataCountries.map((option,index) => (
+          <option key={index} value={option}>
+            {option}
+          </option>
+        ))}
+        </select>    
+            </div>
+       </div>
     </div>
   )
 }
