@@ -1,11 +1,9 @@
 
-import { useState } from "react"
+import { useContext } from "react"
 import { CurrencyContext } from "../context/CurrencyContext"
 
 const InputAmount = () => {
-  const [firstAmount, setFirstAmount] = useState("");
-     
-
+  const { firstAmount, setFirstAmount} = useContext(CurrencyContext);
 
   return (
     <div className="col-6 col-md">
@@ -13,10 +11,7 @@ const InputAmount = () => {
         className="form-control text-dark border border-dark fw-bold"
         type="number"
         value={firstAmount}
-        onChange={e => {setFirstAmount(e.target.value);
-            }
-            
-        }
+        onChange={e => setFirstAmount(e.target.value)}
         placeholder="Enter your Amount"
         fullWidth
         
