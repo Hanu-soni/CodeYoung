@@ -2,8 +2,8 @@ import { EventBusy } from "@mui/icons-material";
 import useAxios from "../hooks/useAxios"
 
 const SelectCountry = (props) => {
-  const {arr,key, value, setValue, label } = props;
-  console.log(props)
+  const {arr,key, value, setValue, label,index } = props;
+  //console.log(props)
 
   const [data, loaded, error] = useAxios("https://restcountries.com/v3.1/all");
 
@@ -34,17 +34,19 @@ const SelectCountry = (props) => {
             <div className="col-9 ">
             <select
   value={value}
-  onChange={label==="From"?(event) => {
-    setValue(event.target.value)
-  }:(event) => {
-    const newArr = [...arr]; // Create a new array
-    //console.log(key)
-    newArr.splice(props.key, 1, {item:event.target.value,index:props.key});
-    setValue(newArr);
-    console.log(newArr);
+  onChange={label === "From"
+  ? (event) => {
+    setValue(event.target.value);
   }
-
+  : (event) => {
+    const newArr = [...arr]; // Create a new array
+    newArr.splice(index, 1, { item: event.target.value, index: index });
+    setValue(newArr);
+  }
 }
+
+
+
   className="form-select"
 >
   <option value="" disabled>Select an option</option>
